@@ -41,20 +41,20 @@ public class Test1 {
         driver.quit();
     }
 
-//    @Test
-//    public void testRegistration() {
-//        driver.get(BASE_URL);
-//        WebElement registrationButton = driver.findElement(By.linkText("[регистрация]"));
-//        registrationButton.click();
-//        Assert.assertNotEquals(BASE_URL, driver.getCurrentUrl());
-//    }
-
     @Test
+    public void testRegistration() {
+        driver.get(BASE_URL);
+        WebElement registrationButton = driver.findElement(By.linkText("[регистрация]"));
+        registrationButton.click();
+        Assert.assertNotEquals(BASE_URL, driver.getCurrentUrl());
+    }
+
+    @Test(priority = 1)
     public void testLoginWithValidCredentials() {
         Assert.assertEquals(BASE_URL, driver.getCurrentUrl());
     }
 
-    @Test
+    @Test(priority = 2)
     public void testProblemSearchByValidId() {
         driver.get(BASE_URL);
 
@@ -69,7 +69,7 @@ public class Test1 {
         Assert.assertEquals(actualProblemId, "Edinitsy", "Search results do not display the correct problem based on the ID.");
     }
 
-    @Test
+    @Test(priority = 3)
     public void testAccessProblemStatement() {
         driver.get(BASE_URL);
 
@@ -80,7 +80,7 @@ public class Test1 {
         Assert.assertTrue(statementText.contains("Problem statement"), "Problem statement is not displayed correctly.");
     }
 
-    @Test
+    @Test(priority = 4)
     public void testSolutionSubmission() {
         driver.get(BASE_URL);
         WebElement usernameInput = driver.findElement(By.name("username"));
