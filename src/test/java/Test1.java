@@ -12,9 +12,32 @@ import java.time.Duration;
 public class Test1 {
     private WebDriver driver;
     private static final String BASE_URL = "https://acmp.ru/";
-    private static final String TASK_URL = "https://acmp.ru/index.asp?main=task&id_task=1234";
+    private static final String TASK_URL = "https://acmp.ru/index.asp?main=task&id_task=1";
     private static final String USERNAME  = "duman_";
     private static final String PASSWORD = "87053570703d";
+    private static final String PROBLEM_SOLUTION = "import java.io.*;\n" +
+            "import java.util.*;\n" +
+            "public class Summ {\n" +
+            "    public static void main(String[] args) throws IOException {\n" +
+            "        ArrayList<Integer> numeric = new ArrayList<>();\n" +
+            "        int s = 0;\n" +
+            "        String str;\n" +
+            "        FileReader fin = new FileReader(\"input.txt\"); // Получение чисел из файла\n" +
+            "        Scanner sc = new Scanner(fin);\n" +
+            "        str = sc.nextLine();\n" +
+            "        StringTokenizer st = new StringTokenizer(str, \" \");\n" +
+            "        while(st.hasMoreTokens()){\n" +
+            "            int a = Integer.valueOf(st.nextToken());\n" +
+            "            numeric.add(a);\n" +
+            "        }\n" +
+            "        for (Integer aNumeric : numeric) {\n" +
+            "            s += aNumeric;\n" +
+            "        }\n" +
+            "        FileWriter countStepFinish = new FileWriter(\"output.txt\");// Запись числа в файл\n" +
+            "        countStepFinish.write(String.valueOf(s));\n" +
+            "        countStepFinish.close();\n" +
+            "    }\n" +
+            "}";
 
     @BeforeMethod
     public void setUp() {
@@ -83,17 +106,11 @@ public class Test1 {
     @Test(priority = 4)
     public void testSolutionSubmission() {
         driver.get(BASE_URL);
-        WebElement usernameInput = driver.findElement(By.name("username"));
-        WebElement passwordInput = driver.findElement(By.name("password"));
-        usernameInput.sendKeys(USERNAME);
-        passwordInput.sendKeys(PASSWORD);
-        WebElement loginButton = driver.findElement(By.cssSelector("input[type='submit'][value='Log in']"));
-        loginButton.click();
 
         driver.navigate().to(TASK_URL);
 
-        WebElement solutionInput = driver.findElement(By.cssSelector(".sub a"));
-        solutionInput.sendKeys("<>");
+        WebElement solutionInput = driver.findElement(By.cssSelector("span"));
+        solutionInput.sendKeys(PROBLEM_SOLUTION);
         WebElement submitButton = driver.findElement(By.cssSelector("input[type='submit'][value='Submit']"));
         submitButton.click();
 
